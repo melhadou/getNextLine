@@ -6,13 +6,13 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:13:45 by melhadou          #+#    #+#             */
-/*   Updated: 2022/12/30 19:23:46 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/01/01 14:06:03 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
-size_t	ft_strlen(char *str)
+size_t	ft_strlen(const char *str)
 {
 	int i;
 
@@ -25,16 +25,24 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-void	ft_strcpy(char *dst, char *src)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	int i;
-	int j;
+	size_t	src_len;
+	size_t	i;
 
-	i = ft_strlen(dst);
-	j = 0;
-	while (src[j])
-		dst[i++] = src[j++];
-	dst[i] = '\0';
+	src_len = ft_strlen((char *)src);
+	i = 0;
+	if (size != 0)
+	{
+		while (*src != '\0' && i < size - 1)
+		{
+			*(dst + i) = *src;
+			i++;
+			src++;
+		}
+		*(dst + i) = '\0';
+	}
+	return (src_len);
 }
 
 char	*ft_strchr(char *s, int c)
@@ -45,40 +53,11 @@ char	*ft_strchr(char *s, int c)
 
 	a = (char)c;
 	i = ft_strlen(s);
-	j = 0;
-	while (j < i + 1)
-	{
+	j = -1;
+	while (++j < i + 1)
 		if (s[j] == a)
-		{
 			return ((char *)s + j);
-		}
-		j++;
-	}
 	return (0);
-}
-
-static char	*ft_cpy(char const *s1, char const *s2, char *str)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	while (*(s1 + i))
-	{
-		*(str + j) = *(s1 + i);
-		j++;
-		i++;
-	}
-	i = 0;
-	while (*(s2 + i))
-	{
-		*(str + j) = *(s2 + i);
-		j++;
-		i++;
-	}
-	*(str + j) = '\0';
-	return (str);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -86,6 +65,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*str;
 	size_t	s1_len;
 	size_t	s2_len;
+	int i;
 
 	s1_len = 0;
 	s2_len = 0;
@@ -97,6 +77,55 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	str = malloc(s1_len + s2_len + 1);
 	if (!str)
 		return (str);
-	ft_cpy(s1, s2, str);
+	i = -1;
+	while (s1[++i])
+		str[i] = s1[i];
+	--i;
+	while (s2[++i - s1_len])
+		str[i] = s2[i - s1_len];
+	str[i] = '\0';
 	return (str);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*ret;
+	int		len;
+
+	ret = NULL;
+	len = ft_strlen(s);
+	ret = malloc(len + 1);
+	if (!ret)
+		return (ret);
+	if (ret)
+	{
+		while (*s)
+		{
+			*ret = *s;
+			ret++;
+			s++;
+		}
+		*ret = '\0';
+	}
+	return (ret - len);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*ret;
+	size_t	s_len;
+
+	ret = NULL;
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	s_len = ft_strlen(s + start);
+	if (!s)
+		return (ft_strdup(""));
+	else if (len <= s_len)
+		s_len = len;
+	ret = malloc(s_len + 1);
+	if (!ret)
+		return (ret);
+	ft_strlcpy(ret, (s + start), s_len + 1);
+	return (ret);
 }

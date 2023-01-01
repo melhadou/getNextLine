@@ -6,7 +6,7 @@
 /*   By: mohamed <melhadou@student.1337.ma>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:38:03 by mohamed           #+#    #+#             */
-/*   Updated: 2022/12/30 19:22:58 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/01/01 14:07:47 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@
 char	*get_next_line(int fd);
 char	*ft_strchr(char *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
-void	ft_strcpy(char *dst, char *src);
-size_t	ft_strlen(char *str);
+// void	ft_strcpy(char *dst, char *src);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+size_t	ft_strlen(const char *str);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strdup(const char *s);
 
 #endif // !GET_NEXT_LINE_H

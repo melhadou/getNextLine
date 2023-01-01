@@ -6,7 +6,7 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:12:44 by melhadou          #+#    #+#             */
-/*   Updated: 2022/12/31 20:18:43 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/01/01 14:25:10 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,45 @@
 char	*get_next_line(int fd)
 {
 	static char *backup = "";
+	char *newbackup;
+	char *idx;
 	char *buf;
-	char *tmp;
+	int len;
 	int r;
 
-	while (r)
+	r = 0;
+	idx = ft_strchr(backup, '\n');
+	if (idx != 0)
 	{
-		// allocate for buffer size
-		buf = malloc((sizeof(char *) * BUFFER_SIZE) + 1);
-		if (!buf)
+		len = idx - backup + 1;
+		buf = ft_substr(backup, 0, len);
+		newbackup = ft_substr(backup, len, -1);
+		free(backup);
+		backup = newbackup;
+		return (buf);
+	}else
+	{
+		if (!(buf = malloc((sizeof(char *) * BUFFER_SIZE ) + 1)))
 			return (NULL);
-		// read buffer size, 
-		r = 0;
-		r = read(fd, buf, BUFFER_SIZE);
-		buf[10] = '\0';
-		tmp = malloc(ft_strlen(backup) + 1);
-		if (!tmp)
+
+		len = -1;
+		while (++len < BUFFER_SIZE)
+			buf[len] = 0;
+		while (ft_strchr(buf, '\n') == 0)
 		{
-			free(buf);
-			return NULL;
+			r = read(fd, buf, BUFFER_SIZE);
+			if (r == -1)
+			{
+				free(buf);
+				free(backup);
+				return (NULL);
+			}
+			buf[BUFFER_SIZE] = '\0';
+			
 		}
-		tmp = ft_strjoin(buf, backup);
-		printf("%d",r);
-		free(buf);
 	}
-	return (backup);
+
+	return backup;
 }
 
 int main (int argc, char *argv[])
