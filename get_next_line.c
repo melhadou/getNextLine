@@ -6,7 +6,7 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:12:44 by melhadou          #+#    #+#             */
-/*   Updated: 2022/12/31 19:10:45 by melhadou         ###   ########.fr       */
+/*   Updated: 2022/12/31 20:18:43 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,35 +23,32 @@ char	*get_next_line(int fd)
 	char *tmp;
 	int r;
 
-	// allocate for buffer size
-	buf = malloc((sizeof(char *) * BUFFER_SIZE) + 1);
-	if (!buf)
-		return (NULL);
-	// read buffer size, 
-	r = read(fd, buf, BUFFER_SIZE);
-
-	buf[10] = '\0';
-
-	if (ft_strchr(buf, '\n') == 0)
+	while (r)
 	{
+		// allocate for buffer size
+		buf = malloc((sizeof(char *) * BUFFER_SIZE) + 1);
+		if (!buf)
+			return (NULL);
+		// read buffer size, 
+		r = 0;
+		r = read(fd, buf, BUFFER_SIZE);
+		buf[10] = '\0';
 		tmp = malloc(ft_strlen(backup) + 1);
 		if (!tmp)
 		{
 			free(buf);
-			return (NULL);
+			return NULL;
 		}
 		tmp = ft_strjoin(buf, backup);
-		free(backup);
-		backup = tmp;
-		free(tmp);
+		printf("%d",r);
+		free(buf);
 	}
-	free(buf);
 	return (backup);
 }
 
 int main (int argc, char *argv[])
 {
-	int fd = open("./test", O_RDONLY);
+	int fd = open("./test.txt", O_RDONLY);
 
 	char *cha = get_next_line(fd);
 
