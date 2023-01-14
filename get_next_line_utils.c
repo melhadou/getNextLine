@@ -6,7 +6,7 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:13:45 by melhadou          #+#    #+#             */
-/*   Updated: 2023/01/01 14:06:03 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:10:46 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (src_len);
 }
 
-char	*ft_strchr(char *s, int c)
+int	ft_strchr(char *s, int c)
 {
 	char	a;
 	int		i;
@@ -56,7 +56,7 @@ char	*ft_strchr(char *s, int c)
 	j = -1;
 	while (++j < i + 1)
 		if (s[j] == a)
-			return ((char *)s + j);
+			return (j);
 	return (0);
 }
 
