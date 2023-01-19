@@ -6,22 +6,22 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:13:45 by melhadou          #+#    #+#             */
-/*   Updated: 2023/01/13 15:10:46 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:08:06 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stddef.h>
 #include <stdio.h>
 size_t	ft_strlen(const char *str)
 {
 	int i;
 
+	if (!str)
+		return (0);
 	i = 0;
-	while (str && *str)
-	{
+	while (str[i])
 		i++;
-		str++;
-	}
 	return (i);
 }
 
@@ -45,45 +45,36 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (src_len);
 }
 
-int	ft_strchr(char *s, int c)
-{
-	char	a;
-	int		i;
-	int		j;
-
-	a = (char)c;
-	i = ft_strlen(s);
-	j = -1;
-	while (++j < i + 1)
-		if (s[j] == a)
-			return (j);
-	return (0);
-}
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*str;
-	size_t	s1_len;
-	size_t	s2_len;
+	size_t len;
+	char* str;
 	int i;
-
-	s1_len = 0;
-	s2_len = 0;
-	str = NULL;
+	int j;
+	
+	i = 0;
+	j = 0;
+	len = 0;
+	if (!s1 && !s2)
+		return NULL;
 	if (s1)
-		s1_len = ft_strlen((char *)s1);
+		len += ft_strlen(s1);
 	if (s2)
-		s2_len = ft_strlen((char *)s2);
-	str = malloc(s1_len + s2_len + 1);
+		len += ft_strlen(s2);
+	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
-		return (str);
-	i = -1;
-	while (s1[++i])
-		str[i] = s1[i];
-	--i;
-	while (s2[++i - s1_len])
-		str[i] = s2[i - s1_len];
-	str[i] = '\0';
+		return NULL;
+	if (s1)
+		while (s1[i]) {
+			str[i] = s1[i];
+			i++;
+		}
+	if (s2)
+		while (s2[j]) {
+			str[i + j] = s2[j];
+			j++;
+		}
+	str[i + j] = '\0';
 	return (str);
 }
 
