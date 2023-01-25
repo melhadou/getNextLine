@@ -6,7 +6,7 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:12:44 by melhadou          #+#    #+#             */
-/*   Updated: 2023/01/19 17:06:47 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/01/25 17:34:01 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,41 +16,14 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
-int	find_char_pos(char *s, int c)
+char *loop(int fd, char *buf, char *line)
 {
-	char	a;
-	int		i;
-	int		j;
-
-	if (s[0] == '\n')
-		return 1;
-	a = (char)c;
-	i = ft_strlen(s);
-	j = 0;
-	while (j < i + 1)
-	{
-		if (s[j] == a)
-			return (j);
-		j++;
-	}
-	return (0);
-}
-
-char *read_buffer(int fd)
-{
-	char *buf;
-	char *line;
 	int tmp;
 	int r;
 
-	buf = NULL;
-	line = NULL;
-	if (!(buf = malloc((sizeof(char) * BUFFER_SIZE) + 1)))
-		return (NULL);
 	while(1)
 	{
 		r = read(fd, buf, BUFFER_SIZE);
-		printf("\n1 -- %d",r);
 		if (r == -1)
 		{
 			free(buf);
@@ -66,6 +39,19 @@ char *read_buffer(int fd)
 			break;
 	}
 	free(buf);
+	return line;
+}
+
+char	*read_buffer(int fd)
+{
+	char *buf;
+	char *line;
+
+	buf = NULL;
+	line = NULL;
+	if (!(buf = malloc((sizeof(char) * BUFFER_SIZE) + 1)))
+		return (NULL);
+	line = loop(fd, buf, line);
 	return line;
 }
 
@@ -85,7 +71,7 @@ char *get_bf_newline(char *line)
 	bf_newline = malloc(sizeof(char) * n + 1);
 	if (!bf_newline)
 		return (NULL);
-	while(i < n)
+	while(i <= n)
 	{
 		bf_newline[i] = line[i];
 		i++;
@@ -94,29 +80,29 @@ char *get_bf_newline(char *line)
 	return (bf_newline);
 }
 
-char *get_af_newline(char *line)
+char	*get_af_newline(char *line)
 {
 	int n;
 	int i;
 	char *af_newline;
 
 	n = 0;
-	i = 0;
 	if (!line)
 		return (NULL);
 	n = find_char_pos(line, '\n');
 	if (!n)
 		return NULL;
-	n = ft_strlen(line) - n;
-	af_newline = malloc(sizeof(char) * n);
+	af_newline = malloc(sizeof(char) * (n + 1));
 	if (!af_newline)
 		return (NULL);
-	while(line[n])
+	i = 0;
+	n++;
+	while(line[n + i])
 	{
-		af_newline[i] = line[n];
+		af_newline[i] = line[n + i];
 		i++;
-		n++;
 	}
+	af_newline[i] = '\0';
 	return (af_newline);
 }
 
@@ -142,15 +128,23 @@ char	*get_next_line(int fd)
 int main (int argc, char *argv[])
 {
 	int fd = open("./test.txt", O_RDONLY);
-	char* line;
+	int fd2 = open("./test1.txt", O_RDONLY);
 
-	while(1)
-	{
-		line = get_next_line(fd);
-		printf("%s", line);
-		free(line);
-		if(!line)
-			break;
-	}
+	char *line = get_next_line(fd);
+	printf("%s",line);
+	free(line);
+
+	char *line2 = get_next_line(fd2);
+	printf("%s",line2);
+	free(line2);
+
+
+	char *line3 = get_next_line(fd2);
+	printf("%s",line3);
+	free(line3);
+
+	char *line1 = get_next_line(fd);
+	printf("%s",line1);
+	free(line1);
 	return 0;
 }
