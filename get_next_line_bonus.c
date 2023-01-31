@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:12:44 by melhadou          #+#    #+#             */
-/*   Updated: 2023/01/31 19:32:14 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/01/31 19:25:13 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*loop(int fd, char *buf, char *line, char *backup)
 {
@@ -105,15 +105,15 @@ char	*get_af_newline(char *line)
 
 char	*get_next_line(int fd)
 {
-	static char	*backup;
+	static char	*backup[OPEN_MAX];
 	char		*line;
 	char		*buf;
 	char		*tmp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!find_char_pos(backup, '\n'))
-		buf = read_buffer(fd, backup);
+	if (!find_char_pos(backup[fd], '\n'))
+		buf = read_buffer(fd, backup[fd]);
 	else
 	{
 		buf = malloc(1);
@@ -121,11 +121,11 @@ char	*get_next_line(int fd)
 			return (NULL);
 		*buf = '\0';
 	}
-	tmp = ft_strjoin(backup, buf);
-	free(backup);
+	tmp = ft_strjoin(backup[fd], buf);
+	free(backup[fd]);
 	free(buf);
 	line = get_bf_newline(tmp);
-	backup = get_af_newline(tmp);
+	backup[fd] = get_af_newline(tmp);
 	free(tmp);
 	return (line);
 }
