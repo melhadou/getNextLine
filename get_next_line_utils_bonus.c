@@ -6,7 +6,7 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:13:45 by melhadou          #+#    #+#             */
-/*   Updated: 2023/01/31 19:16:12 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/01/31 19:58:00 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_strlen(const char *str)
 	i = 0;
 	if (!str)
 		return (0);
-	while (str)
+	while (str[i])
 		i++;
 	return (i);
 }
