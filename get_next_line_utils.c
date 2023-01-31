@@ -6,7 +6,7 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:13:45 by melhadou          #+#    #+#             */
-/*   Updated: 2023/01/31 20:00:38 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/01/31 21:50:03 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,30 +46,47 @@ int	find_char_pos(char *s, int c)
 	return (0);
 }
 
+void	ft_cpy(char *str, const char *s1, const char *s2)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (s1)
+	{
+		while (s1[i])
+		{
+			str[i] = s1[i];
+			i++;
+		}
+	}
+	if (s2)
+	{
+		while (s2[j])
+		{
+			str[i + j] = s2[j];
+			j++;
+		}
+	}
+	str[i + j] = '\0';
+}
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
-	int		i;
-	int		j;
+	size_t	len;
 
-	i = -1;
-	j = 0;
+	len = 0;
 	if (!s1 && !s2)
 		return (NULL);
 	if (s1)
-		j += ft_strlen(s1);
+		len += ft_strlen(s1);
 	if (s2)
-		j += ft_strlen(s2);
-	str = malloc(sizeof(char) * j + 1);
+		len += ft_strlen(s2);
+	str = malloc(sizeof(char) * len + 1);
 	if (!str)
 		return (NULL);
-	if (s1)
-		while (s1[++i])
-			str[i] = s1[i];
-	j = -1;
-	if (s2)
-		while (s2[++j])
-			str[i + j] = s2[j];
-	str[i + j] = '\0';
+	ft_cpy(str, s1, s2);
 	return (str);
 }

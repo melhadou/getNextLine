@@ -6,7 +6,7 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:12:44 by melhadou          #+#    #+#             */
-/*   Updated: 2023/01/31 19:40:45 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/01/31 21:57:44 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*read_buffer(int fd, char *backup)
 
 	buf = NULL;
 	line = NULL;
-	buf = malloc((sizeof(char ) * BUFFER_SIZE) + 1);
+	buf = malloc((sizeof(char ) * BUFFER_SIZE) + 2);
 	if (!buf)
 		return (NULL);
 	line = loop(fd, buf, line, backup);
@@ -69,7 +69,7 @@ char	*get_bf_newline(char *line)
 		n = ft_strlen(line);
 	if (!n)
 		return (NULL);
-	bf_newline = malloc(sizeof(char) * (n + 1));
+	bf_newline = malloc(sizeof(char) * (n + 2));
 	if (!bf_newline)
 		return (NULL);
 	while (++i < n)
