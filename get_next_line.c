@@ -6,13 +6,14 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:12:44 by melhadou          #+#    #+#             */
-/*   Updated: 2023/01/31 21:57:44 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/02/04 14:20:34 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdlib.h>
 
-char	*loop(int fd, char *buf, char *line, char *backup)
+char	*loop(int fd, char *buf, char *line)
 {
 	int		tmp;
 	int		r;
@@ -23,24 +24,23 @@ char	*loop(int fd, char *buf, char *line, char *backup)
 		r = read(fd, buf, BUFFER_SIZE);
 		if (r == -1)
 		{
-			free(buf);
-			free(line);
-			free(backup);
+			ft_free(&buf);
+			ft_free(&line);
 			return (NULL);
 		}
 		buf[r] = '\0';
 		temp = line;
 		line = ft_strjoin(line, buf);
-		free(temp);
+		ft_free(&temp);
 		tmp = find_char_pos(buf, '\n');
 		if (tmp || r == 0)
 			break ;
 	}
-	free(buf);
+	ft_free(&buf);
 	return (line);
 }
 
-char	*read_buffer(int fd, char *backup)
+char	*read_buffer(int fd)
 {
 	char	*buf;
 	char	*line;
@@ -50,7 +50,7 @@ char	*read_buffer(int fd, char *backup)
 	buf = malloc((sizeof(char ) * BUFFER_SIZE) + 2);
 	if (!buf)
 		return (NULL);
-	line = loop(fd, buf, line, backup);
+	line = loop(fd, buf, line);
 	return (line);
 }
 
@@ -113,7 +113,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!find_char_pos(backup, '\n'))
-		buf = read_buffer(fd, backup);
+		buf = read_buffer(fd);
 	else
 	{
 		buf = malloc(1);
@@ -121,11 +121,13 @@ char	*get_next_line(int fd)
 			return (NULL);
 		*buf = '\0';
 	}
+	if (!buf)
+		return (ft_free(&backup));
 	tmp = ft_strjoin(backup, buf);
-	free(backup);
-	free(buf);
+	ft_free(&backup);
+	ft_free(&buf);
 	line = get_bf_newline(tmp);
 	backup = get_af_newline(tmp);
-	free(tmp);
+	ft_free(&tmp);
 	return (line);
 }

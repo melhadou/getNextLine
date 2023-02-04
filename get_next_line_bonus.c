@@ -6,13 +6,13 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:12:44 by melhadou          #+#    #+#             */
-/*   Updated: 2023/01/31 19:25:13 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/02/04 14:21:02 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*loop(int fd, char *buf, char *line, char *backup)
+char	*loop(int fd, char *buf, char *line)
 {
 	int		tmp;
 	int		r;
@@ -25,7 +25,6 @@ char	*loop(int fd, char *buf, char *line, char *backup)
 		{
 			free(buf);
 			free(line);
-			free(backup);
 			return (NULL);
 		}
 		buf[r] = '\0';
@@ -40,7 +39,7 @@ char	*loop(int fd, char *buf, char *line, char *backup)
 	return (line);
 }
 
-char	*read_buffer(int fd, char *backup)
+char	*read_buffer(int fd)
 {
 	char	*buf;
 	char	*line;
@@ -50,7 +49,7 @@ char	*read_buffer(int fd, char *backup)
 	buf = malloc((sizeof(char ) * BUFFER_SIZE) + 1);
 	if (!buf)
 		return (NULL);
-	line = loop(fd, buf, line, backup);
+	line = loop(fd, buf, line);
 	return (line);
 }
 
@@ -113,7 +112,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!find_char_pos(backup[fd], '\n'))
-		buf = read_buffer(fd, backup[fd]);
+		buf = read_buffer(fd);
 	else
 	{
 		buf = malloc(1);
@@ -121,6 +120,8 @@ char	*get_next_line(int fd)
 			return (NULL);
 		*buf = '\0';
 	}
+	if (!buf)
+		return (ft_free(&backup[fd]));
 	tmp = ft_strjoin(backup[fd], buf);
 	free(backup[fd]);
 	free(buf);

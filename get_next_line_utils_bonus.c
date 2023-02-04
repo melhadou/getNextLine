@@ -6,11 +6,19 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:13:45 by melhadou          #+#    #+#             */
-/*   Updated: 2023/01/31 21:46:21 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/02/03 22:46:18 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+char	*ft_free(char **str)
+{
+	if (*str)
+		free(*str);
+	*str = NULL;
+	return (*str);
+}
 
 int	ft_strlen(const char *str)
 {

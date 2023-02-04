@@ -6,7 +6,7 @@
 /*   By: mohamed <melhadou@student.1337.ma>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:38:03 by mohamed           #+#    #+#             */
-/*   Updated: 2023/01/31 19:18:30 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/02/03 22:50:09 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@
 # include <stdlib.h>
 # include <limits.h>
 
+char	*ft_free(char **str);
 char	*get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*read_buffer(int fd, char *backup);
+char	*read_buffer(int fd);
 char	*get_bf_newline(char *line);
 char	*get_af_newline(char *line);
-char	*loop(int fd, char *buf, char *line, char *backup);
+char	*loop(int fd, char *buf, char *line);
 int		find_char_pos(char *s, int c);
 int		ft_strlen(const char *str);
 
