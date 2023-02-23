@@ -6,7 +6,7 @@
 /*   By: mohamed <melhadou@student.1337.ma>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:38:03 by mohamed           #+#    #+#             */
-/*   Updated: 2023/02/04 18:42:39 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/02/23 13:26:52 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ char	*get_bf_newline(char *line);
 char	*get_af_newline(char *line);
 char	*loop(int fd, char *buf, char *line);
 int		find_char_pos(char *s, int c);
-int		ft_strlen(const char *str);
+size_t	gt_strlen(const char *str);
 
 #endif // !GET_NEXT_LINE_H

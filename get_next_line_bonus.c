@@ -6,7 +6,7 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:12:44 by melhadou          #+#    #+#             */
-/*   Updated: 2023/02/04 18:43:44 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/02/23 13:27:09 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*get_bf_newline(char *line)
 		return (NULL);
 	n = find_char_pos(line, '\n');
 	if (n == 0)
-		n = ft_strlen(line);
+		n = gt_strlen(line);
 	if (!n)
 		return (NULL);
 	bf_newline = malloc(sizeof(char) * (n + 1));
@@ -89,7 +89,7 @@ char	*get_af_newline(char *line)
 	if (!line)
 		return (NULL);
 	n = find_char_pos(line, '\n');
-	len = ft_strlen(line);
+	len = gt_strlen(line);
 	if (!n)
 		return (NULL);
 	af_newline = malloc(sizeof(char) * (len - n + 1));

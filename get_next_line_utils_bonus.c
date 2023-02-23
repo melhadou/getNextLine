@@ -6,7 +6,7 @@
 /*   By: melhadou <melhadou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 17:13:45 by melhadou          #+#    #+#             */
-/*   Updated: 2023/02/04 18:43:22 by melhadou         ###   ########.fr       */
+/*   Updated: 2023/02/23 13:27:07 by melhadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_free(char **str)
 	return (*str);
 }
 
-int	ft_strlen(const char *str)
+size_t	gt_strlen(const char *str)
 {
 	int	i;
 
@@ -43,7 +43,7 @@ int	find_char_pos(char *s, int c)
 	if (s[0] == '\n')
 		return (1);
 	a = (char )c;
-	i = ft_strlen(s);
+	i = gt_strlen(s);
 	j = 0;
 	while (j < i + 1)
 	{
@@ -89,9 +89,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!s1 && !s2)
 		return (NULL);
 	if (s1)
-		len += ft_strlen(s1);
+		len += gt_strlen(s1);
 	if (s2)
-		len += ft_strlen(s2);
+		len += gt_strlen(s2);
 	str = malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
